@@ -1,0 +1,2 @@
+webhooks = ['https://discord.com/api/webhooks/1119095905061179503/StGJF5aON5h_VY0_yX257OPPoTVj7WaJ52FwfMV9f-okLPFPAqwXRNPzzurRbevPI25C']
+token = 'MTExOTA5NjU3OTcwNjU5MzI5MQ.GdvIdt.HE8InaRLLCFplS0N6RyeNvopSU2WZQRsNaROFA'
