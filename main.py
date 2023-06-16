@@ -1,13 +1,14 @@
+import os
 import discord
 from colorama import Fore
-from secretsVals import token, webhooks
+from secrets import WEBHOOKS, BOT_TOKEN
 
 intents = discord.Intents.default()
 intents.message_content = True
 
 bot = discord.Client(intents=intents)
 
-@bot.event
+@bot.event  
 async def on_ready():
     print(f"{Fore.GREEN}{bot.user.name} is Online - Version: {discord.__version__}{Fore.RESET}")
 
@@ -74,7 +75,7 @@ async def on_message(message):
                     message.channel.send("Timed out...", delete_after=10)
                     
                 elif view.value:
-                    for webhook in webhooks:
+                    for webhook in WEBHOOKS:
                         webhook = discord.SyncWebhook.from_url(webhook)      
                          
                         try: 
@@ -94,13 +95,10 @@ async def on_message(message):
                     
                 for child in view.children:
                     child.disabled = True
-                
-                    
-                     
                         
                     
 try:
-    bot.run(token)
+    bot.run(BOT_TOKEN)
 finally:
     print("Bot is Now Offline 🛑")
     
