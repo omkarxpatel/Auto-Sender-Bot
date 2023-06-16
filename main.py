@@ -16,6 +16,7 @@ class ConfirmButton(discord.ui.View):
     def __init__(self, auth):
         super().__init__()
         self.auth = auth
+        self.value = None
 
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
     async def confirm(
@@ -24,9 +25,9 @@ class ConfirmButton(discord.ui.View):
 
         if interaction.user and interaction.user.id == self.auth:
             await interaction.response.send_message(
-                "Sending to servers...", ephemeral=True
+                "Sending to servers...", delete_after=10
             )
-            button.disabled = True
+            self.value = True
             self.stop()
             
         else:
@@ -39,11 +40,13 @@ class ConfirmButton(discord.ui.View):
 
         if interaction.user and interaction.user.id == self.auth:
             await interaction.response.send_message(
-                "Not sending to servers", ephemeral=True
+                "Not sending to servers", delete_after=10
             )
 
-            button.disabled = True
+            self.value = False
             self.stop()
+            
+
         else:
             await interaction.response.send_message(
                 "Only the owner of this command can respond", ephemeral=True
@@ -53,25 +56,49 @@ class ConfirmButton(discord.ui.View):
 @bot.event
 async def on_message(message):
     if message.channel.id == 1119061663715430400:
-        print(message.content)
         if message.author.id in [797258598819561502, 838974822288851005]:
 
                 view = ConfirmButton(message.author.id)
                 
                 embed = discord.Embed(
                     title = "Send this message?",
-                    description = message.content,
-                    timestamp = discord.utils.utcnow()
+                    description = f"`Message Content:`\n\n{message.content}",
+                    timestamp = discord.utils.utcnow(),
                     )
                 
                 await message.channel.send(embed = embed, view = view, delete_after=10) 
                 await view.wait()
                 
-                if view.confirm:
+                count, error = 0,0
+                if view.value is None:
+                    message.channel.send("Timed out...", delete_after=10)
+                    
+                elif view.value:
                     for webhook in webhooks:
-                        webhook = discord.SyncWebhook.from_url(webhook)        
-                        webhook.send(message.content)
-
+                        webhook = discord.SyncWebhook.from_url(webhook)      
+                         
+                        try: 
+                            webhook.send(message.content)
+                            count += 1
+                        except:
+                            error += 1    
+                            
+                    msg = f"Message content: {message.content}\n\nSuccessfully sent to {count} channels.\nFailed to send to {error} channels."   
+                    await message.channel.send(msg, delete_after=10)
+                    print(msg, "\n\n")
+                    
+                    await message.add_reaction("✅")     
+                
+                else:
+                    await message.add_reaction("❌")     
+                    
+                for child in view.children:
+                    child.disabled = True
+                
+                    
+                     
+                        
+                    
 try:
     bot.run(token)
 finally:

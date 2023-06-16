@@ -1,2 +1,2 @@
-webhooks = ['https://discord.com/api/webhooks/1119095905061179503/StGJF5aON5h_VY0_yX257OPPoTVj7WaJ52FwfMV9f-okLPFPAqwXRNPzzurRbevPI25C']
-token = 'MTExOTA5NjU3OTcwNjU5MzI5MQ.GdvIdt.HE8InaRLLCFplS0N6RyeNvopSU2WZQRsNaROFA'
+webhooks = ['https://discord.com/api/webhooks/1119095905061179503/StGJF5aON5h_VY0_yX257OPPoTVj7WaJ52FwfMV9f-okLPFPAqwXRNPzzurRbevPI25C', 'https://discord.com/api/webhooks/1119292400796450876/mU1Tsik_JINieMO8JvpN3pZhribcsR-7mIiSoX0F-oJJqJEAyIsZ8uZKq7zHc8pFvsVp']
+token = 'MTExOTA5NjU3OTcwNjU5MzI5MQ.GOaAsl.iEmmz_YTR7zmf0uP2Ew28paZrooi5Sc2C0BmA8'
